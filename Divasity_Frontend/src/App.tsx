@@ -1,6 +1,8 @@
 import { ConnectButton } from "@iota/dapp-kit";
 import { Box, Container, Flex, Heading } from "@radix-ui/themes";
 import { WalletStatus } from "./WalletStatus";
+import "./App.css"
+
 
 function App() {
   return (

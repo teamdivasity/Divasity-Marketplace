@@ -9,6 +9,7 @@ import { emailOTPVerification } from "../../services/emailOtpVerification";
 
 export const userRegister = async (request: Request, response: Response):Promise<any> => {
   try {
+    console.log('Registration request body:', request.body);
     const { email, firstName, lastName, password, address, userName, telephone } = request.body;
 
     // Check if email already exists
@@ -33,6 +34,10 @@ export const userRegister = async (request: Request, response: Response):Promise
     const id = v4();
     const hashedPassword = await hashPassword(password);
 
+    console.log('Creating user with data:', {
+      id, email, firstName, userName, address, lastName, telephone
+    });
+
     const newUser = await User.create({
       id,
       email,
@@ -55,17 +60,21 @@ export const userRegister = async (request: Request, response: Response):Promise
       otp_expiry: expiryTime(10),
     });
 
-    await emailOTPVerification(emailOTP, email);
+    // Temporarily disable email sending for testing
+    // await emailOTPVerification(emailOTP, email);
 
     return response.status(200).json({
       error: false,
-      message: "Registration successful, OTP sent to email",
+      message: "Registration successful, OTP created (email disabled for testing)",
+      otp: emailOTP, // Only for testing - remove in production
     });
   } catch (error: any) {
+    console.error('Registration error details:', error);
     return response.status(500).json({
       error: true,
       message: "Internal server error",
       errorMessage: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     });
   }
 };

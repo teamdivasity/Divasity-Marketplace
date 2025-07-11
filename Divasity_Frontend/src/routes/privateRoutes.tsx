@@ -1,7 +1,7 @@
 import {Dashboard} from '../pages/Customer/Dashboard'
 import { Marketplace } from '../pages/Customer/Marketplace'
 import { Projects } from '../pages/Customer/Projects'
-import { Wallets } from '../pages/Customer/Wallet'
+import { Wallet } from '../pages/Customer/Wallet'
 import { Posts } from '../pages/Customer/Posts'
 
 export const PrivateRoutes = [
@@ -19,7 +19,7 @@ export const PrivateRoutes = [
     },
     {
         path: "/wallet",
-        element: <Wallets/>
+        element: <Wallet/>
     },
     {
         path: "/posts",
