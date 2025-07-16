@@ -216,12 +216,6 @@ export function Marketplace() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-yellow-50/30 to-purple-100/30 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
-      </div>
 
       <div className="md:hidden">
         <TabHeader
@@ -238,15 +232,17 @@ export function Marketplace() {
         animate="visible"
       >
         {/* Header */}
-        <motion.div className="mb-8" variants={itemVariants}>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-yellow-600 bg-clip-text text-transparent mb-2">
-            Investment Marketplace
-          </h1>
-          <p className="text-gray-600 text-lg">Discover and invest in innovative projects shaping the future</p>
+        <motion.div className="mb-12" variants={itemVariants}>
+          <div className="text-center bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-yellow-600 bg-clip-text text-transparent mb-4">
+              Investment Marketplace
+            </h1>
+            <p className="text-gray-600 text-lg">Discover and invest in innovative projects shaping the future</p>
+          </div>
         </motion.div>
 
         {/* Search and Filters */}
-        <motion.div className="mb-8 space-y-4" variants={itemVariants}>
+        <motion.div className="mb-10 space-y-6" variants={itemVariants}>
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -312,7 +308,7 @@ export function Marketplace() {
         </motion.div>
 
         {/* Categories */}
-        <motion.div className="mb-8" variants={itemVariants}>
+        <motion.div className="mb-10" variants={itemVariants}>
           <div className="flex overflow-x-auto pb-2 space-x-2">
             {categories.map((category) => (
               <button
@@ -338,8 +334,8 @@ export function Marketplace() {
 
         {/* Projects Grid */}
         <motion.div variants={itemVariants}>
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-gray-600">
+          <div className="flex items-center justify-between mb-8">
+            <p className="text-gray-600 text-lg font-medium">
               Showing {filteredProjects.length} of {projects.length} projects
             </p>
           </div>
@@ -360,8 +356,18 @@ export function Marketplace() {
               >
                 {/* Project Image */}
                 <div className={`relative ${viewMode === 'list' ? 'w-64 flex-shrink-0' : 'aspect-video'}`}>
-                  <div className="w-full h-full bg-gradient-to-r from-purple-400 to-yellow-500 relative">
-                    <div className="absolute inset-0 bg-black/20" />
+                  <div className="w-full h-full relative overflow-hidden">
+                    <img 
+                      src={project.id === '1' 
+                        ? "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop&crop=center"
+                        : project.id === '2'
+                        ? "https://i.pinimg.com/736x/b7/23/60/b72360e3917de1f3f7a8f8c1de6ccacf.jpg"
+                        : "https://i.pinimg.com/736x/f7/7c/67/f77c6768b729ef714d7ab13f0b2729cb.jpg"
+                      }
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/30" />
                     
                     {/* Badges */}
                     <div className="absolute top-3 left-3 flex flex-wrap gap-2">

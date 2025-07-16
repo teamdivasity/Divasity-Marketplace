@@ -118,20 +118,20 @@ export function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50">
       <div className="absolute top-0 left-0 w-full h-full bg-pattern opacity-5 z-0"></div>
       
-      <div className="grid md:grid-cols-2 gap-0 w-full max-w-5xl bg-white rounded-3xl overflow-hidden shadow-2xl z-10 relative">
+      <div className="grid md:grid-cols-2 gap-0 w-full max-w-6xl bg-white rounded-3xl overflow-hidden shadow-2xl z-10 relative">
         {/* Left Side - Decorative */}
         <div className="hidden md:block relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-500"></div>
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1579547945413-497e1b99dac0')] bg-cover bg-center opacity-20"></div>
-          <div className="relative h-full flex flex-col justify-center items-center p-12 text-white">
+          <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{backgroundImage: `url(${images.LoginBg})`}}></div>
+          <div className="relative h-full flex flex-col justify-center items-center p-16 text-white">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
               className="text-center"
             >
-              <h2 className="text-3xl font-bold mb-6">Welcome to Divasity</h2>
-              <p className="text-white/80 mb-8">
+              <h2 className="text-4xl font-bold mb-8">Welcome to Divasity</h2>
+              <p className="text-white/80 mb-12 text-lg leading-relaxed">
                 Join our community of investors and entrepreneurs making a difference through innovative projects.
               </p>
               <div className="flex justify-center">
@@ -143,30 +143,30 @@ export function Login() {
         
         {/* Right Side - Form */}
         <motion.div 
-          className="p-8 md:p-12 flex flex-col justify-center"
+          className="p-10 md:p-16 flex flex-col justify-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <div className="md:hidden flex justify-center mb-6">
-            <img src={images.Logo} alt="Logo" className="h-16 w-auto" />
+          <div className="md:hidden flex justify-center mb-8">
+            <img src={images.Logo} alt="Logo" className="h-20 w-auto" />
           </div>
           
           <motion.div variants={itemVariants}>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back 👋</h2>
-            <p className="text-gray-600 mb-8">Log in to see what's waiting for you</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Welcome Back 👋</h2>
+            <p className="text-gray-600 mb-12 text-lg">Log in to see what's waiting for you</p>
           </motion.div>
 
           {errors.api && (
             <motion.div 
               variants={itemVariants}
-              className="mb-6 bg-red-50 p-4 rounded-lg border border-red-100"
+              className="mb-8 bg-red-50 p-6 rounded-xl border border-red-100"
             >
               <p className="text-sm text-red-600">{errors.api}</p>
             </motion.div>
           )}
 
-          <motion.div className="space-y-6" variants={itemVariants}>
+          <motion.div className="space-y-8" variants={itemVariants}>
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -234,7 +234,7 @@ export function Login() {
               )}
             </div>
 
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-end mb-2">
               <Link to="/forgot-password" className="text-sm font-medium text-purple-600 hover:text-purple-500 transition-colors">
                 Forgot your password?
               </Link>
@@ -259,7 +259,7 @@ export function Login() {
             </div>
           </motion.div>
 
-          <motion.div className="mt-8" variants={itemVariants}>
+          <motion.div className="mt-12" variants={itemVariants}>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
@@ -269,7 +269,7 @@ export function Login() {
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-8">
               <button
                 type="button"
                 className="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200"
@@ -280,7 +280,7 @@ export function Login() {
             </div>
           </motion.div>
 
-          <motion.div className="mt-8 text-center" variants={itemVariants}>
+          <motion.div className="mt-12 text-center" variants={itemVariants}>
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
               <Link to="/register" className="font-medium text-purple-600 hover:text-purple-500 transition-colors">

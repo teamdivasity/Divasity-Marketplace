@@ -156,7 +156,7 @@ export function Wallet() {
         animate="visible"
       >
         {/* Header */}
-        <motion.div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between" variants={itemVariants}>
+        <motion.div className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between" variants={itemVariants}>
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Digital Wallet</h1>
             <p className="text-gray-600">Manage your assets and track your investments</p>
@@ -177,7 +177,7 @@ export function Wallet() {
         </motion.div>
 
         {/* Balance Overview */}
-        <motion.div className="mb-8" variants={itemVariants}>
+        <motion.div className="mb-12" variants={itemVariants}>
           <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-8 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
@@ -235,7 +235,7 @@ export function Wallet() {
         </motion.div>
 
         {/* Navigation Tabs */}
-        <motion.div className="mb-8" variants={itemVariants}>
+        <motion.div className="mb-10" variants={itemVariants}>
           <div className="flex space-x-1 bg-white p-1 rounded-xl border border-gray-200">
             {[
               { id: 'overview', name: 'Overview', icon: <WalletIcon size={18} /> },
@@ -268,8 +268,8 @@ export function Wallet() {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-8"
             >
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Portfolio Overview</h3>
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">Portfolio Overview</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-600 mb-1">+15.2%</div>
@@ -297,7 +297,7 @@ export function Wallet() {
               className="space-y-6"
             >
               {assets.map((asset) => (
-                <div key={asset.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div key={asset.id} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6 last:mb-0">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <div className="p-3 bg-gray-100 rounded-xl">
@@ -366,7 +366,7 @@ export function Wallet() {
                 {transactions
                   .filter(tx => transactionFilter === 'all' || tx.type === transactionFilter)
                   .map((transaction) => (
-                    <div key={transaction.id} className="p-6 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
+                    <div key={transaction.id} className="p-8 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className="p-2 bg-gray-100 rounded-full">

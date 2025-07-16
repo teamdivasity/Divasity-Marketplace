@@ -138,15 +138,17 @@ export function Posts() {
         animate="visible"
       >
         {/* Header Section */}
-        <motion.div className="mb-8" variants={itemVariants}>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Community
-          </h1>
-          <p className="text-gray-600">Connect with investors and project owners</p>
+        <motion.div className="mb-12" variants={itemVariants}>
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+            <h1 className="text-3xl font-bold text-gray-900 mb-3">
+              Community
+            </h1>
+            <p className="text-gray-600 text-lg">Connect with investors and project owners</p>
+          </div>
         </motion.div>
 
         {/* Search Bar */}
-        <motion.div className="mb-6" variants={itemVariants}>
+        <motion.div className="mb-8" variants={itemVariants}>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             <input
@@ -160,8 +162,8 @@ export function Posts() {
         </motion.div>
 
         {/* Create Post */}
-        <motion.div className="mb-6" variants={itemVariants}>
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+        <motion.div className="mb-8" variants={itemVariants}>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="flex items-start gap-3">
               <img 
                 src="https://randomuser.me/api/portraits/men/1.jpg" 
@@ -209,16 +211,16 @@ export function Posts() {
               <p className="text-gray-500">No posts found matching your search.</p>
             </div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-8">
               {filteredPosts.map((post) => (
                 <motion.div
                   key={post.id}
-                  className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
+                  className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow"
                   whileHover={{ y: -2 }}
                 >
-                  <div className="p-4">
+                  <div className="p-6">
                     {/* Post Header */}
-                    <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <img 
                           src={post.author.avatar} 
@@ -240,11 +242,11 @@ export function Posts() {
                     </div>
                     
                     {/* Post Content */}
-                    <p className="text-gray-800 mb-4">{post.content}</p>
+                    <p className="text-gray-800 mb-6 leading-relaxed">{post.content}</p>
                     
                     {/* Post Images */}
                     {post.images && post.images.length > 0 && (
-                      <div className="mb-4 rounded-xl overflow-hidden">
+                      <div className="mb-6 rounded-xl overflow-hidden">
                         <img 
                           src={post.images[0]} 
                           alt="Post image" 
@@ -254,7 +256,7 @@ export function Posts() {
                     )}
                     
                     {/* Post Stats */}
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                       <span>{post.likes} likes</span>
                       <div className="flex items-center gap-4">
                         <span>{post.comments} comments</span>
@@ -263,7 +265,7 @@ export function Posts() {
                     </div>
                     
                     {/* Post Actions */}
-                    <div className="flex items-center justify-between border-t border-gray-100 pt-3">
+                    <div className="flex items-center justify-between border-t border-gray-100 pt-4">
                       <button 
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                           post.liked ? 'text-purple-600' : 'text-gray-600 hover:bg-gray-100'

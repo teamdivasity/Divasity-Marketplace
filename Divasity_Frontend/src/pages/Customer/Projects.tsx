@@ -268,7 +268,7 @@ export function Projects() {
         animate="visible"
       >
         {/* Header */}
-        <motion.div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between" variants={itemVariants}>
+        <motion.div className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between" variants={itemVariants}>
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">My Projects</h1>
             <p className="text-gray-600">Manage and track your investment projects</p>
@@ -292,7 +292,7 @@ export function Projects() {
         </motion.div>
 
         {/* Stats Overview */}
-        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8" variants={itemVariants}>
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12" variants={itemVariants}>
           {[
             { label: 'Total Projects', value: totalStats.totalProjects, icon: <Target size={20} />, color: 'purple' },
             { label: 'Active Projects', value: totalStats.activeProjects, icon: <Activity size={20} />, color: 'green' },
@@ -343,7 +343,7 @@ export function Projects() {
         </AnimatePresence>
 
         {/* Filters and Search */}
-        <motion.div className="mb-8 space-y-4" variants={itemVariants}>
+        <motion.div className="mb-10 space-y-6" variants={itemVariants}>
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Search */}
             <div className="flex-1 relative">
@@ -453,8 +453,18 @@ export function Projects() {
                 >
                   {/* Project Image */}
                   <div className={`relative ${viewMode === 'list' ? 'w-64 flex-shrink-0' : 'aspect-video'}`}>
-                    <div className="w-full h-full bg-purple-600 relative">
-                      <div className="absolute inset-0 bg-black/20" />
+                    <div className="w-full h-full relative overflow-hidden">
+                      <img 
+                        src={project.id === '1' 
+                          ? "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop&crop=center"
+                          : project.id === '2'
+                          ? "https://i.pinimg.com/736x/b7/23/60/b72360e3917de1f3f7a8f8c1de6ccacf.jpg"
+                          : "https://i.pinimg.com/1200x/f4/58/0c/f4580cceb8889a3b6fd97f6b9a4a7a38.jpg"
+                        }
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/30" />
                       
                       {/* Status Badge */}
                       <div className="absolute top-3 left-3">

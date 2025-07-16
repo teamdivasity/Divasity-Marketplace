@@ -106,15 +106,17 @@ export default function NewsFeed() {
         animate="visible"
       >
         {/* Header Section */}
-        <motion.div className="mb-8" variants={itemVariants}>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            News Feed
-          </h1>
-          <p className="text-gray-600">Stay updated with the latest news and opportunities</p>
+        <motion.div className="mb-12" variants={itemVariants}>
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+            <h1 className="text-3xl font-bold text-gray-900 mb-3">
+              News Feed
+            </h1>
+            <p className="text-gray-600 text-lg">Stay updated with the latest news and opportunities</p>
+          </div>
         </motion.div>
 
         {/* Search Bar */}
-        <motion.div className="mb-6" variants={itemVariants}>
+        <motion.div className="mb-8" variants={itemVariants}>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             <input
@@ -128,7 +130,7 @@ export default function NewsFeed() {
         </motion.div>
 
         {/* Categories */}
-        <motion.div className="mb-8 overflow-x-auto" variants={itemVariants}>
+        <motion.div className="mb-10 overflow-x-auto" variants={itemVariants}>
           <div className="flex gap-2 pb-2">
             {categories.map((category) => (
               <button
@@ -153,7 +155,7 @@ export default function NewsFeed() {
               <p className="text-gray-500">No news found matching your criteria.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredNews.map((item) => (
                 <motion.div
                   key={item.id}
@@ -172,7 +174,7 @@ export default function NewsFeed() {
                       </div>
                     </div>
                     
-                    <div className="p-5 flex-1">
+                    <div className="p-6 flex-1">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-medium text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
                           {item.category}
@@ -182,11 +184,11 @@ export default function NewsFeed() {
                         </button>
                       </div>
                       
-                      <h3 className="text-lg font-bold text-gray-900 mb-2">
+                      <h3 className="text-lg font-bold text-gray-900 mb-3">
                         {item.title}
                       </h3>
                       
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      <p className="text-gray-600 text-sm mb-6 line-clamp-2 leading-relaxed">
                         {item.text}
                       </p>
                       
@@ -219,7 +221,7 @@ export default function NewsFeed() {
         {activeCategory === "All" && (
           <>
             {["Education", "Technology", "Finance"].map((category) => (
-              <motion.div key={category} className="mt-10" variants={itemVariants}>
+              <motion.div key={category} className="mt-16" variants={itemVariants}>
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-gray-900">{category}</h2>
                   <button className="inline-flex items-center gap-1 text-purple-600 hover:text-purple-700 text-sm font-medium transition-colors">
@@ -228,7 +230,7 @@ export default function NewsFeed() {
                   </button>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {newsData
                     .filter(item => item.category === category)
                     .slice(0, 2)
@@ -250,7 +252,7 @@ export default function NewsFeed() {
                             </div>
                           </div>
                           
-                          <div className="p-5 flex-1">
+                          <div className="p-6 flex-1">
                             <h3 className="text-lg font-bold text-gray-900 mb-2">
                               {item.title}
                             </h3>

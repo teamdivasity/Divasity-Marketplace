@@ -154,13 +154,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-yellow-50/30 to-purple-100/30 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
-      </div>
+    <div className="min-h-screen bg-gray-50 relative">
 
       <div className="md:hidden">
         <TabHeader
@@ -171,7 +165,7 @@ export default function Dashboard() {
       </div>
       
       <motion.div 
-        className="pt-24 md:pt-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10"
+        className="pt-24 md:pt-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -180,7 +174,7 @@ export default function Dashboard() {
         <motion.div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between" variants={itemVariants}>
           <div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-yellow-600 bg-clip-text text-transparent mb-2">
-              Welcome back, Investor 👋
+              Welcome back, Engr 👋
             </h1>
             <p className="text-gray-600 text-lg">Here's your comprehensive investment overview</p>
           </div>
@@ -218,7 +212,7 @@ export default function Dashboard() {
 
         {/* Stats Grid */}
         <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-12"
           variants={itemVariants}
         >
           {stats.map((stat, index) => (
@@ -262,7 +256,7 @@ export default function Dashboard() {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-12">
           {/* Chart Section */}
           <div className="xl:col-span-2">
             <motion.div 
@@ -283,24 +277,26 @@ export default function Dashboard() {
                   </button>
                 </div>
               </div>
-              <div className="h-64 bg-gradient-to-r from-purple-100 to-yellow-100 rounded-xl flex items-center justify-center">
-                <div className="text-center">
-                  <BarChart3 size={48} className="text-yellow-500 mx-auto mb-2" />
-                  <p className="text-gray-600">Interactive Chart Placeholder</p>
-                  <p className="text-sm text-gray-500">Portfolio value trending upward</p>
+              <div className="h-80 rounded-xl overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center">
+                  <div className="text-center text-white flex items-center flex-col space-y-3">
+                    <BarChart3 size={56} className="mx-auto" />
+                    <p className="font-semibold text-lg">Interactive Chart</p>
+                    <p className="text-sm opacity-90">Portfolio trending upward</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Quick Actions */}
             <motion.div 
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20"
+              className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20"
               variants={itemVariants}
             >
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-6">Quick Actions</h3>
               <div className="space-y-3">
                 {[
                   { icon: <Plus size={18} />, title: "New Investment", desc: "Explore opportunities", color: "purple", link: "/marketplace" },
@@ -327,10 +323,10 @@ export default function Dashboard() {
 
             {/* Market News */}
             <motion.div 
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20"
+              className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20"
               variants={itemVariants}
             >
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-bold text-gray-900">Market News</h3>
                 <Link to="/news" className="text-purple-600 hover:text-purple-700 text-sm font-medium">
                   View All
@@ -361,7 +357,7 @@ export default function Dashboard() {
 
         {/* Featured Projects */}
         <motion.div variants={itemVariants}>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Featured Projects</h2>
             <Link 
               to="/projects" 
@@ -373,15 +369,23 @@ export default function Dashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {featuredProjects.map((project) => (
+            {featuredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden hover:shadow-2xl transition-all duration-300 group"
                 whileHover={{ y: -4 }}
               >
                 <div className="relative">
-                  <div className="aspect-video bg-gradient-to-r from-purple-400 to-blue-500 relative">
-                    <div className="absolute inset-0 bg-black/20" />
+                  <div className="aspect-video relative overflow-hidden">
+                    <img 
+                      src={index === 0 
+                        ? "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=250&fit=crop&crop=center" 
+                        : "https://i.pinimg.com/736x/53/fe/e1/53fee13e1744545fada80a995d27c3e0.jpg"
+                      }
+                      alt={index === 0 ? "Solar panels and renewable energy" : "AI healthcare technology"}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/30" />
                     
                     {/* Badges */}
                     <div className="absolute top-4 left-4 flex gap-2">

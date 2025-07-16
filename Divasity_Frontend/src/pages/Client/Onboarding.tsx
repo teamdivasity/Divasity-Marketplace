@@ -63,11 +63,11 @@ export function Onboarding({ onComplete }: { onComplete: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col">
+    <div className="fixed inset-0 flex flex-col bg-gradient-to-br from-purple-50 to-blue-50">
       {/* Progress bar */}
-      <div className="h-1 w-full bg-gray-200">
+      <div className="h-2 w-full bg-gray-200 shadow-sm">
         <div 
-          className="h-full bg-[#8A0C86] transition-all duration-300" 
+          className="h-full bg-gradient-to-r from-[#8A0C86] to-purple-600 transition-all duration-500 ease-out" 
           style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
         />
       </div>
@@ -76,42 +76,69 @@ export function Onboarding({ onComplete }: { onComplete: () => void }) {
       <div className="flex-1 overflow-x-hidden">
         <Slider ref={sliderRef} {...settings}>
           {slides.map((slide) => (
-            <div key={slide.id} className={`h-[70vh] w-full  flex flex-col items-center justify-center p-8`}>
-                <div className='flex justify-center items-center pt-20'>
-                <img 
-                src={slide.image} 
-                alt={slide.title}
-                className="h-[30vh]"
-              />
+            <div key={slide.id} className="h-full w-full flex flex-col items-center justify-center px-8 py-12">
+              {/* Image Section */}
+              <div className="flex justify-center items-center mb-12">
+                <div className="relative">
+                  <img 
+                    src={slide.image} 
+                    alt={slide.title}
+                    className="h-[30vh] max-h-80 object-contain drop-shadow-lg"
+                  />
+                  <div className="absolute -inset-4 bg-white/20 rounded-full blur-xl -z-10"></div>
                 </div>
+              </div>
 
-              <h2 className="text-[26px] font-[700] text-center py-6 text-gray-800 font-poppins">{slide.title}</h2>
-              <p className="text-center text-[20px] text-gray-600 mb-8 md:max-w-full max-w-md  font-opensans">{slide.description}</p>
+              {/* Content Section */}
+              <div className="text-center max-w-2xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 font-poppins leading-tight">
+                  {slide.title}
+                </h2>
+                <p className="text-lg md:text-xl text-gray-600 leading-relaxed font-opensans">
+                  {slide.description}
+                </p>
+              </div>
             </div>
           ))}
         </Slider>
       </div>
       
       {/* Navigation buttons */}
-      <div className="p-4 flex justify-between items-center">
+      <div className="p-6 flex justify-between items-center bg-white/80 backdrop-blur-sm">
         <button 
           onClick={goToPrev}
-          className={`px-6 py-2 rounded-full ${currentSlide === 0 ? 'invisible' : 'text-gray-600'}`}
+          className={`px-6 py-3 rounded-xl font-medium transition-all ${
+            currentSlide === 0 
+              ? 'invisible' 
+              : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+          }`}
         >
           Back
         </button>
         
+        {/* Slide indicators */}
+        <div className="flex space-x-2">
+          {slides.map((_, index) => (
+            <div
+              key={index}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentSlide ? 'bg-[#8A0C86] w-6' : 'bg-gray-300'
+              }`}
+            />
+          ))}
+        </div>
+        
         {currentSlide < slides.length - 1 ? (
           <button 
             onClick={goToNext}
-            className="px-8 py-3 bg-dpurple text-white rounded-[10px] font-medium"
+            className="px-8 py-3 bg-gradient-to-r from-[#8A0C86] to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 transform hover:scale-105"
           >
             Next
           </button>
         ) : (
           <button 
             onClick={onComplete}
-            className="px-8 py-3 bg-dpurple text-white rounded-[10px] font-medium"
+            className="px-8 py-3 bg-gradient-to-r from-[#8A0C86] to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-200 transform hover:scale-105"
           >
             Get Started
           </button>

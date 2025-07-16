@@ -145,20 +145,20 @@ export function Signup() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50">
       <div className="absolute top-0 left-0 w-full h-full bg-pattern opacity-5 z-0"></div>
       
-      <div className="grid md:grid-cols-2 gap-0 w-full max-w-5xl bg-white rounded-3xl overflow-hidden shadow-2xl z-10 relative">
+      <div className="grid md:grid-cols-2 gap-0 w-full max-w-6xl bg-white rounded-3xl overflow-hidden shadow-2xl z-10 relative">
         {/* Left Side - Decorative */}
         <div className="hidden md:block relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-500"></div>
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551434678-e076c223a692')] bg-cover bg-center opacity-20"></div>
-          <div className="relative h-full flex flex-col justify-center items-center p-12 text-white">
+          <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{backgroundImage: `url(${images.SignupBg})`}}></div>
+          <div className="relative h-full flex flex-col justify-center items-center p-16 text-white">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
               className="text-center"
             >
-              <h2 className="text-3xl font-bold mb-6">Join Divasity Today</h2>
-              <p className="text-white/80 mb-8">
+              <h2 className="text-4xl font-bold mb-8">Join Divasity Today</h2>
+              <p className="text-white/80 mb-12 text-lg leading-relaxed">
                 Create an account to start investing in innovative projects or launch your own fundraising campaign.
               </p>
               <div className="flex justify-center">
@@ -170,21 +170,21 @@ export function Signup() {
         
         {/* Right Side - Form */}
         <motion.div 
-          className="p-8 md:p-12 flex flex-col justify-center"
+          className="p-10 md:p-16 flex flex-col justify-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <div className="md:hidden flex justify-center mb-6">
-            <img src={images.Logo} alt="Logo" className="h-16 w-auto" />
+          <div className="md:hidden flex justify-center mb-8">
+            <img src={images.Logo} alt="Logo" className="h-20 w-auto" />
           </div>
           
           <motion.div variants={itemVariants}>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
-            <p className="text-gray-600 mb-6">Join our community of innovators and investors</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Create Account</h2>
+            <p className="text-gray-600 mb-8 text-lg">Join our community of innovators and investors</p>
             
             {/* Progress Steps */}
-            <div className="flex items-center mb-8">
+            <div className="flex items-center mb-10">
               <div className="flex-1">
                 <div className={`h-2 rounded-full ${step >= 1 ? 'bg-purple-600' : 'bg-gray-200'}`}></div>
                 <p className={`text-xs mt-1 ${step >= 1 ? 'text-purple-600 font-medium' : 'text-gray-500'}`}>Personal Info</p>
@@ -206,16 +206,16 @@ export function Signup() {
           {errors.api && (
             <motion.div 
               variants={itemVariants}
-              className="mb-6 bg-red-50 p-4 rounded-lg border border-red-100"
+              className="mb-8 bg-red-50 p-6 rounded-xl border border-red-100"
             >
               <p className="text-sm text-red-600">{errors.api}</p>
             </motion.div>
           )}
 
           {step === 1 ? (
-            <motion.div className="space-y-5" variants={itemVariants}>
+            <motion.div className="space-y-6" variants={itemVariants}>
               {/* Name Fields */}
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
                     First Name
@@ -319,18 +319,18 @@ export function Signup() {
                 )}
               </div>
 
-              <div className="pt-4">
+              <div className="pt-8">
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200"
+                  className="w-full flex justify-center py-4 px-6 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200"
                 >
                   Continue
                 </button>
               </div>
             </motion.div>
           ) : (
-            <motion.div className="space-y-5" variants={itemVariants}>
+            <motion.div className="space-y-6" variants={itemVariants}>
               {/* Email */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -436,11 +436,11 @@ export function Signup() {
                 )}
               </div>
 
-              <div className="flex gap-3 pt-4">
+              <div className="flex gap-4 pt-8">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="flex-1 py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200"
+                  className="flex-1 py-4 px-6 border border-gray-300 rounded-xl shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200"
                 >
                   Back
                 </button>
@@ -448,7 +448,7 @@ export function Signup() {
                   type="button"
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="flex-1 flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-75 transition-all duration-200"
+                  className="flex-1 flex justify-center py-4 px-6 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-75 transition-all duration-200"
                 >
                   {isLoading ? (
                     <span className="flex items-center">
@@ -463,7 +463,7 @@ export function Signup() {
             </motion.div>
           )}
 
-          <motion.div className="mt-8 text-center" variants={itemVariants}>
+          <motion.div className="mt-12 text-center" variants={itemVariants}>
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
               <Link to="/signin" className="font-medium text-purple-600 hover:text-purple-500 transition-colors">

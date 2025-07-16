@@ -84,39 +84,53 @@ export function CategoryContd() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Header
         name={categoryName || ""}
-        containerStyle="bg-white h-[15vh]"
+        containerStyle="bg-white h-[15vh] shadow-sm"
         handlePress={handleGoBack}
         icon={<ChevronLeft />}
       />
-      <div className="px-6 pt-4">
-        {/* Business Idea */}
-        <FormField
-          name="businessIdea"
-          type="textarea"
-          rows={6}
-          value={form.businessIdea}
-          placeholder="Tell us about your business ideas*"
-          errorMessage={formErrors.businessIdea}
-          handleChange={value => handleTextChange('businessIdea', value)}
-          containerStyles="pb-4"
-          inputStyles="border-gray-100 focus-within:border-dpurple"
-        />
-        {/* Business Name */}
-        <FormField
-          name="businessName"
-          type="text"
-          value={form.businessName}
-          placeholder="Business Name*"
-          errorMessage={formErrors.businessName}
-          handleChange={value => handleTextChange('businessName', value)}
-          containerStyles="pb-6"
-          inputStyles="border-gray-100 focus-within:border-dpurple"
-        />
+      
+      {/* Main Content */}
+      <div className="px-6 pt-8 pb-8">
+        {/* Form Section */}
+        <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-6">Tell us about your business</h2>
+          
+          {/* Business Idea */}
+          <div className="mb-6">
+            <FormField
+              name="businessIdea"
+              type="textarea"
+              rows={6}
+              value={form.businessIdea}
+              placeholder="Tell us about your business ideas*"
+              errorMessage={formErrors.businessIdea}
+              handleChange={value => handleTextChange('businessIdea', value)}
+              containerStyles=""
+              inputStyles="border-gray-200 focus-within:border-dpurple"
+            />
+          </div>
+          
+          {/* Business Name */}
+          <div className="mb-8">
+            <FormField
+              name="businessName"
+              type="text"
+              value={form.businessName}
+              placeholder="Business Name*"
+              errorMessage={formErrors.businessName}
+              handleChange={value => handleTextChange('businessName', value)}
+              containerStyles=""
+              inputStyles="border-gray-200 focus-within:border-dpurple"
+            />
+          </div>
+        </div>
+        
         {/* Upload Section */}
-        <h3 className="font-poppins font-semibold text-lg pb-2">Upload available documents</h3>
+        <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
+          <h3 className="font-poppins font-semibold text-lg mb-6 text-gray-900">Upload available documents</h3>
         {(
           [
             { key: 'businessPlan', label: 'Business Plan' },
@@ -160,8 +174,10 @@ export function CategoryContd() {
             </div>
           );
         })}
+        </div>
+        
         {/* Submit Button */}
-        <div className="pt-6 pb-10">
+        <div className="mt-8">
           <CustomButton name="Submit" containerStyle="w-full text-white" handlePress={handleSubmit} />
         </div>
       </div>

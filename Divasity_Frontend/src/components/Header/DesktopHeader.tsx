@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, ShoppingCart, FileText, ClipboardList, Wallet, Bell, User } from 'lucide-react';
+import { images } from '../../constants';
 
 export function DesktopHeader() {
   const location = useLocation();
@@ -17,7 +18,8 @@ export function DesktopHeader() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 flex items-center gap-2">
+            <img src={images.Logo} alt="Divasity" className="h-8 w-auto" />
             <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
               Divasity
             </h1>
@@ -50,9 +52,9 @@ export function DesktopHeader() {
               <Bell size={20} />
               <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
             </button>
-            <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+            <Link to="/profile" className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center hover:shadow-lg transition-all duration-200 cursor-pointer">
               <User size={16} className="text-white" />
-            </div>
+            </Link>
           </div>
         </div>
       </div>

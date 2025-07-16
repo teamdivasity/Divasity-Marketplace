@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { images } from "../../constants";
 interface HeaderProps {
   name: string;
   icon?: React.ReactNode;
@@ -29,9 +30,10 @@ interface HeaderProps {
           <Link to="/profile">{icon2}</Link>
         </div>
         
-        {/* Centered text (takes remaining space) */}
-        <div className="">
-          <h2 className={`${textStyle} text-center font-poppins font-semibold text-[25px]`}>{name}</h2>
+        {/* Centered text with logo (takes remaining space) */}
+        <div className="flex items-center justify-center gap-2">
+          <img src={images.Logo} alt="Divasity" className="h-8 w-auto" />
+          <h2 className={`${textStyle} font-poppins font-semibold text-[25px]`}>{name}</h2>
         </div>
         
       </div>
