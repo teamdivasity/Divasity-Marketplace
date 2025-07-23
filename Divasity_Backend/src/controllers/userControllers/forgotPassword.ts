@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../../models/User";
+import { User, Notification } from '../../models';
 import { Otp } from "../../models/Otp";
 import { v4 as uuidv4 } from "uuid";
 import { generateOTP } from "../../services/generateOtp";

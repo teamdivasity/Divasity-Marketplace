@@ -18,16 +18,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      NewsId: {
-        type: Sequelize.UUID,
-        allowNull: false,
-        references: {
-          model: 'News', // Ensure this matches the News table name
-          key: 'Newsid', // Ensure this matches the News primary key
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      },
       message: {
         type: Sequelize.STRING,
         allowNull: false,

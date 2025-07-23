@@ -4,6 +4,7 @@ import { database } from '../config/database';
 export enum role {
     ADMIN = "admin",
     USER = "user",
+    INVESTOR = "investor"
 }
 
 export interface UserAttributes {

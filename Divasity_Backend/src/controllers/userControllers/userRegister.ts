@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "../../models/User";
+import { User, Notification } from '../../models';
 import { v4 } from "uuid";
 import { hashPassword } from '../../services/password';
 import { generateOTP } from "../../services/generateOtp";
@@ -9,7 +9,7 @@ import { emailOTPVerification } from "../../services/emailOtpVerification";
 
 export const userRegister = async (request: Request, response: Response):Promise<any> => {
   try {
-    const { email, firstName, lastName, password, address, userName, telephone } = request.body;
+    const { email, firstName, lastName, password, address, userName, role, telephone } = request.body;
 
     // Check if email already exists
     const existingEmail = await User.findOne({ where: { email } });
@@ -41,7 +41,7 @@ export const userRegister = async (request: Request, response: Response):Promise
       address,
       lastName,
       telephone,
-      role: "user",
+      role,
       password: hashedPassword,
       IsVerified: false,
     });

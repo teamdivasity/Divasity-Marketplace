@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../../models/User";
+import { User, Notification } from '../../models';
 import { Otp } from "../../models/Otp";
 import { hashPassword } from "../../services/password"; 
 

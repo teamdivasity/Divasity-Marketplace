@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "../../models/User";
+import { User, Notification } from '../../models';
 
 export const getAllUsers = async (req: Request, res: Response):Promise<any> => {
   try {

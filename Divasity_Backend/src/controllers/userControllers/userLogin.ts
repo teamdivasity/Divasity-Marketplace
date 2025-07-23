@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
-import User from "../../models/User";
+import { User, Notification } from '../../models';
 import { verifyPassword } from "../../services/password";
 import { generateToken } from "../../services/token";
 

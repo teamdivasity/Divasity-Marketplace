@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import News from "../models/News";
-import User from "../models/User";
-import Notification from "../models/Notifications";
+import { User, Notification } from '../models';
+// import Notification from "../models/Notifications";
 import { verifyToken } from "../services/token";
 
 // Combined auth and admin check middleware

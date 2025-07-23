@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "../../models/User";
+import { User, Notification } from '../../models';
 import { verifyToken } from "../../services/token";
 
 export const updateUser = async (req: Request, res: Response):Promise<any> => {
