@@ -1,12 +1,12 @@
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
-export const hashPassword = async (password: string) => {
+export const hashPassword = async (password: string): Promise<string> => {
   const saltRounds = 10;
   try {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    return hashedPassword
+    return hashedPassword;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 

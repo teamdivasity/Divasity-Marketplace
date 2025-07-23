@@ -11,6 +11,9 @@ import logger from "morgan";
 import { HttpError } from "http-errors";
 import { database } from "./config/database";
 import indexRoutes from "./routes/indexRoutes";
+import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
+import Newsroute from "./routes/Newsroute";
 
 // Define Swagger document interface
 interface SwaggerDocument {

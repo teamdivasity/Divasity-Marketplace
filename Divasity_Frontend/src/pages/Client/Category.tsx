@@ -60,56 +60,69 @@ export function Category() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Header
         name="Choose Category"
-        containerStyle="bg-white h-[15vh]"
+        containerStyle="bg-white h-[15vh] shadow-sm"
         handlePress={handleGoBack}
       />
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
-        {categories.map((category) => {
-          const isSelected = category.id === selectedId;
+      
+      {/* Main Content */}
+      <div className="pt-6 pb-8">
+        {/* Categories Grid */}
+        <div className="px-6 mb-12">
+          <h2 className="text-xl font-semibold text-gray-900 mb-6 text-center">
+            Select your category to get started
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            {categories.map((category) => {
+              const isSelected = category.id === selectedId;
 
-          return (
-            <motion.div
-              key={category.id}
-              onClick={() => setSelectedId(category.id)}
-              whileHover={{ scale: 1.05 }}
-              animate={{ scale: isSelected ? 1.05 : 1 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={`cursor-pointer border rounded-xl p-4 h-[15vh] flex items-center justify-center transition-colors duration-300
-                ${isSelected
-                  ? "border-dpurple bg-purple-50 text-dpurple font-medium font-opensans text-center text-[18px]"
-                  : "border-gray-300 hover:border-gray-400 text-center font-medium text-[18px] font-opensans"
-                }
-              `}
-            >
-              {category.name}
-            </motion.div>
-          );
-        })}
-      </div>
+              return (
+                <motion.div
+                  key={category.id}
+                  onClick={() => setSelectedId(category.id)}
+                  whileHover={{ scale: 1.05 }}
+                  animate={{ scale: isSelected ? 1.05 : 1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className={`cursor-pointer border rounded-xl p-6 h-[15vh] flex items-center justify-center transition-colors duration-300 shadow-sm hover:shadow-md
+                    ${isSelected
+                      ? "border-dpurple bg-purple-50 text-dpurple font-medium font-opensans text-center text-[18px]"
+                      : "border-gray-300 hover:border-gray-400 text-center font-medium text-[18px] font-opensans bg-white"
+                    }
+                  `}
+                >
+                  {category.name}
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
-      {/* Slider below categories */}
-      <div className="mt-8 px-4 pt-4 overflow-hidden">
-        <Slider {...settings}>
-          {sliderItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex-none w-[200px] h-[150px] bg-gray-200 rounded-lg flex items-center justify-center shadow-md"
-            >
-              <p className="text-lg font-medium">{item}</p>
-            </div>
-          ))}
-        </Slider>
-      </div>
+        {/* Slider Section */}
+        <div className="px-6 mb-12">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">Featured Content</h3>
+          <div className="overflow-hidden">
+            <Slider {...settings}>
+              {sliderItems.map((item, index) => (
+                <div key={index} className="px-2">
+                  <div className="w-full h-[150px] bg-gradient-to-r from-purple-100 to-blue-100 rounded-lg flex items-center justify-center shadow-md hover:shadow-lg transition-shadow">
+                    <p className="text-lg font-medium text-gray-800">{item}</p>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </div>
 
-      <div className="px-4 pt-4">
-        <CustomButton
-          name="Continue"
-          containerStyle="w-full text-white"
-          handlePress={handleContinue} // 👈 Trigger the logic on click
-        />
+        {/* Continue Button */}
+        <div className="px-6">
+          <CustomButton
+            name="Continue"
+            containerStyle="w-full text-white"
+            handlePress={handleContinue}
+          />
+        </div>
       </div>
     </div>
   );

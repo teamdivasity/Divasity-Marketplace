@@ -17,26 +17,35 @@ export function TabBar() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t border-gray-400 pb-10 pt-2 bg-white">
-      <ul className="flex justify-around">
-        {tabs.map(({ key, icon, path }) => {
-          const isActive = location.pathname === path;
-          return (
-            <li key={key} className="flex-1">
-              <Link
-                to={path}
-                className={`w-full flex flex-col items-center py-2 ${
-                  isActive ? 'text-dpurple' : 'text-gray-500 hover:text-dpurple'
-                }`}
-              >
-                {React.cloneElement(icon as React.ReactElement, {
-                  className: isActive ? 'text-dpurple' : 'text-gray-500',
-                })}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white/95 backdrop-blur-md shadow-lg">
+      <div className="safe-area-inset-bottom">
+        <ul className="flex justify-around px-2 py-2">
+          {tabs.map(({ key, icon, path }) => {
+            const isActive = location.pathname === path;
+            return (
+              <li key={key} className="flex-1">
+                <Link
+                  to={path}
+                  className={`w-full flex flex-col items-center py-3 px-2 rounded-xl transition-all duration-200 ${
+                    isActive 
+                      ? 'text-purple-600 bg-purple-50' 
+                      : 'text-gray-500 hover:text-purple-600 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className={`p-1 rounded-lg ${
+                    isActive ? 'bg-purple-100' : ''
+                  }`}>
+                    {React.cloneElement(icon as React.ReactElement, {
+                      className: isActive ? 'text-purple-600' : 'text-gray-500',
+                      size: 22
+                    })}
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </nav>
   );
 }
