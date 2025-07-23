@@ -1,0 +1,1153 @@
+openapi: 3.0.3
+info:
+  title: DIVASITY API DOCS
+  description: API for all backend related activities
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Local development server
+
+# ======================
+# SECURITY SCHEMES
+# ======================
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+# ======================
+# SCHEMAS
+# ======================
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        userName:
+          type: string
+          example: "john_doe"
+        firstName:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
+        telephone:
+          type: string
+          example: "+1234567890"
+        role:
+          type: string
+          enum: [user, investor, admin]
+          example: "user"
+        IsVerified:
+          type: boolean
+          example: false
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        userId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          example: "Solar Energy Project"
+        category:
+          type: string
+          example: "Renewable Energy"
+        expectedRaiseAmount:
+          type: string
+          example: "100000.00"
+        totalMoneyInvested:
+          type: string
+          example: "50000.00"
+        description:
+          type: string
+          example: "A project to build solar panels."
+        status:
+          type: string
+          enum: [OPEN, FUNDED, CLOSED]
+          example: "OPEN"
+        startDate:
+          type: string
+          format: date-time
+          example: "2025-07-23T00:00:00Z"
+        endDate:
+          type: string
+          format: date-time
+          example: "2026-07-23T00:00:00Z"
+
+    Investment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        userId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        projectId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        amount:
+          type: string
+          example: "1000.00"
+        returnAmount:
+          type: string
+          example: "1200.00"
+        successRate:
+          type: number
+          example: 75.0
+
+    News:
+      type: object
+      properties:
+        Newsid:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        UserId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        Newstitle:
+          type: string
+          example: "New Investment Opportunity"
+        Newscontent:
+          type: string
+          example: "Details about a new investment opportunity."
+        Newsimage:
+          type: string
+          nullable: true
+          example: "https://example.com/image.jpg"
+        links:
+          type: string
+          nullable: true
+          example: "https://example.com"
+        categories:
+          type: array
+          items:
+            type: string
+          example: ["Investment", "News"]
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Error message"
+        errorMessage:
+          type: string
+          nullable: true
+          example: "Detailed error message"
+
+# ======================
+# AUTHENTICATION PATHS
+# ======================
+paths:
+  /users/register:
+    post:
+      summary: Register a new user
+      description: Creates a new user account and sends an OTP to the provided email for verification.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, firstName, lastName, password, address, userName, telephone]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                firstName:
+                  type: string
+                  example: "John"
+                lastName:
+                  type: string
+                  example: "Doe"
+                password:
+                  type: string
+                  example: "securePassword123"
+                address:
+                  type: string
+                  example: "123 Main St"
+                userName:
+                  type: string
+                  example: "john_doe"
+                telephone:
+                  type: string
+                  example: "+1234567890"
+      responses:
+        '200':
+          description: Registration successful, OTP sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Registration successful, OTP sent to email"
+        '400':
+          description: Email or phone already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/verifyotp:
+    post:
+      summary: Verify OTP for user registration
+      description: Verifies the OTP sent to the user's email to activate their account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, otp]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                otp:
+                  type: string
+                  example: "123456"
+      responses:
+        '200':
+          description: OTP verified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "OTP verified successfully, user account activated"
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid OTP or user already verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/resendOtp:
+    post:
+      summary: Resend OTP for user verification
+      description: Resends a new OTP to the user's email if they are not yet verified.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+      responses:
+        '200':
+          description: New OTP sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "New OTP sent to email"
+        '400':
+          description: User already verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/login:
+    post:
+      summary: User login
+      description: Authenticates a user and returns a JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                password:
+                  type: string
+                  example: "securePassword123"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User login successful"
+                  data:
+                    $ref: '#/components/schemas/User'
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '400':
+          description: Invalid email or password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Account not verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/forgot-password:
+    post:
+      summary: Request password reset
+      description: Sends an OTP to the user's email for password reset.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+      responses:
+        '200':
+          description: OTP sent for password reset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "OTP has been sent to user@example.com"
+        '400':
+          description: Email does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/verify-otp:
+    post:
+      summary: Verify OTP and reset password
+      description: Verifies the OTP and updates the user's password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [otp, new_password]
+              properties:
+                otp:
+                  type: string
+                  example: "123456"
+                new_password:
+                  type: string
+                  example: "newSecurePassword123"
+      responses:
+        '200':
+          description: Password updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Password has been successfully updated"
+        '400':
+          description: Invalid OTP or expired OTP
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+# ======================
+# USER MANAGEMENT PATHS
+# ======================
+  /users/getuser:
+    get:
+      summary: Get all users
+      description: Retrieves a list of all users (admin access required).
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Users retrieved successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/getuser/{id}:
+    get:
+      summary: Get user by ID
+      description: Retrieves a user by their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User retrieved successfully"
+                  data:
+                    $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/update/{id}:
+    patch:
+      summary: Update user profile
+      description: Updates the username or telephone of a user (user must update their own profile).
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                  example: "john_doe_updated"
+                telephone:
+                  type: string
+                  example: "+1234567890"
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "User updated successfully"
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input or username already in use
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+# ======================
+# PROJECT MANAGEMENT PATHS
+# ======================
+  /projects:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Get all projects
+      description: Retrieves a list of all projects.
+      responses:
+        '200':
+          description: Projects retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      summary: Create a new project
+      description: Creates a new project (requires user role and authentication).
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, category, expectedRaiseAmount]
+              properties:
+                name:
+                  type: string
+                  example: "Solar Energy Project"
+                category:
+                  type: string
+                  example: "Renewable Energy"
+                expectedRaiseAmount:
+                  type: string
+                  example: "100000.00"
+                description:
+                  type: string
+                  example: "A project to build solar panels."
+                startDate:
+                  type: string
+                  format: date-time
+                  example: "2025-07-23T00:00:00Z"
+                endDate:
+                  type: string
+                  format: date-time
+                  example: "2026-07-23T00:00:00Z"
+      responses:
+        '201':
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /projects/{id}:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Get project by ID
+      description: Retrieves a project by its ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: Project retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      summary: Update a project
+      description: Updates a project (requires user role and ownership).
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Solar Energy Project"
+                category:
+                  type: string
+                  example: "Renewable Energy"
+                expectedRaiseAmount:
+                  type: string
+                  example: "150000.00"
+                description:
+                  type: string
+                  example: "Updated project description."
+                startDate:
+                  type: string
+                  format: date-time
+                  example: "2025-07-23T00:00:00Z"
+                endDate:
+                  type: string
+                  format: date-time
+                  example: "2026-07-23T00:00:00Z"
+      responses:
+        '200':
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Unauthorized (not owner)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete a project
+      description: Deletes a project (requires user role and ownership).
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Project deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Unauthorized (not owner)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+# ======================
+# INVESTMENT PATHS
+# ======================
+  /investments:
+    post:
+      summary: Invest in a project
+      description: Allows an investor to invest in a project (requires investor role).
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [projectId, amount]
+              properties:
+                projectId:
+                  type: string
+                  format: uuid
+                  example: "123e4567-e89b-12d3-a456-426614174000"
+                amount:
+                  type: string
+                  example: "1000.00"
+      responses:
+        '201':
+          description: Investment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investment'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Project or user not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /investments/my-investments:
+    get:
+      summary: Get user's investments
+      description: Retrieves all investments for the authenticated investor.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Investments retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Investment'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /investments/stats:
+    get:
+      summary: Get investment statistics
+      description: Retrieves statistics for the authenticated investor's investments.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Investment stats retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalInvestments:
+                    type: integer
+                    example: 5
+                  totalInvestedAmount:
+                    type: number
+                    example: 5000.00
+                  totalReturnAmount:
+                    type: number
+                    example: 6000.00
+                  averageSuccessRate:
+                    type: number
+                    example: 75.0
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /investments/{investmentId}/outcome:
+    put:
+      summary: Update investment outcome
+      description: Updates the return amount and success rate of an investment (requires admin role).
+      parameters:
+        - in: path
+          name: investmentId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [investmentId, returnAmount, successRate]
+              properties:
+                investmentId:
+                  type: string
+                  format: uuid
+                  example: "123e4567-e89b-12d3-a456-426614174000"
+                returnAmount:
+                  type: string
+                  example: "1200.00"
+                successRate:
+                  type: number
+                  example: 75.0
+      responses:
+        '200':
+          description: Investment outcome updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investment'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Admin access required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Investment or user not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+# ======================
+# NEWS PATHS
+# ======================
+  /news/createNews:
+    post:
+      summary: Create a news article
+      description: Creates a new news article (requires admin role).
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [Newstitle, Newscontent]
+              properties:
+                Newstitle:
+                  type: string
+                  example: "New Investment Opportunity"
+                Newscontent:
+                  type: string
+                  example: "Details about a new investment opportunity."
+                Newsimage:
+                  type: string
+                  nullable: true
+                  example: "https://example.com/image.jpg"
+                links:
+                  type: string
+                  nullable: true
+                  example: "https://example.com"
+                categories:
+                  type: array
+                  items:
+                    type: string
+                  example: ["Investment", "News"]
+      responses:
+        '201':
+          description: News created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  data:
+                    $ref: '#/components/schemas/News'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /news/getnews:
+    get:
+      summary: Get all news articles
+      description: Retrieves a list of all news articles.
+      responses:
+        '200':
+          description: News retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "News retrieved successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/News'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

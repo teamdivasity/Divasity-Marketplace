@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const userRegister_1 = require("../controllers/userControllers/userRegister");
+const userLogin_1 = require("../controllers/userControllers/userLogin");
+const forgotPassword_1 = require("../controllers/userControllers/forgotPassword");
+const verifyOtpForgotPassword_1 = require("../controllers/userControllers/verifyOtpForgotPassword");
+const userController_1 = require("../controllers/userControllers/userController");
+const updateUser_1 = require("../controllers/userControllers/updateUser");
+const userRoutes = express_1.default.Router();
+userRoutes.post("/register", userRegister_1.userRegister);
+userRoutes.post("/verifyotp", userRegister_1.verifyOtp);
+userRoutes.post("/resendOtp", userRegister_1.resendOtp);
+userRoutes.post("/login", userLogin_1.userLogin);
+userRoutes.post("/forgot-password", forgotPassword_1.forgotPassword);
+userRoutes.post("/verify-otp", verifyOtpForgotPassword_1.verifyResetPasswordOtpWithNewPassword);
+userRoutes.get("/getuser", userController_1.getAllUsers);
+userRoutes.get("/getuser/:id", userController_1.getUserById);
+userRoutes.patch("/update/:id", updateUser_1.updateUser);
+exports.default = userRoutes;

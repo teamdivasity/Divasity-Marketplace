@@ -21,7 +21,6 @@ pids/
 .env.local
 
 # Build output
-dist/
 build/
 out/
 
