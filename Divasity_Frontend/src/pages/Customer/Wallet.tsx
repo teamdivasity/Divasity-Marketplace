@@ -6,6 +6,7 @@ import {
   History, Bell, QrCode, ExternalLink, Award, Target, Activity
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { WalletIntegration } from "../../components/Advanced/WalletIntegration";
 
 interface Asset {
   id: string;
@@ -268,23 +269,7 @@ export function Wallet() {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-8"
             >
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900 mb-6">Portfolio Overview</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600 mb-1">+15.2%</div>
-                    <div className="text-sm text-gray-600">Monthly Growth</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600 mb-1">8</div>
-                    <div className="text-sm text-gray-600">Active Investments</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-600 mb-1">$3,750</div>
-                    <div className="text-sm text-gray-600">Total Profit</div>
-                  </div>
-                </div>
-              </div>
+              <WalletIntegration userId="user123" />
             </motion.div>
           )}
 

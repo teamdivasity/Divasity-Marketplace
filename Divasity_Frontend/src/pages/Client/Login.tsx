@@ -1,10 +1,10 @@
-import { FormField } from "../../components/Form/Form";
 import { images } from "../../constants";
 import { useState } from "react";
-import { CustomButton } from "../../components/Button/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
+import { authService } from "../../services/authService";
+import { APP_CONFIG } from "../../config";
 
 export function Login() {
   const [form, setForm] = useState({
@@ -62,33 +62,26 @@ export function Login() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.password,
-        }),
+      const response = await authService.login({
+        email: form.email,
+        password: form.password,
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setErrors({ ...errors, api: errorData.message || "Login failed. Please try again." });
-        setIsLoading(false);
-        return;
-      }
-
-      const data = await response.json();
       
       // Store user data and token in sessionStorage
-      sessionStorage.setItem("user", JSON.stringify(data.data));
-      sessionStorage.setItem("token", data.token);
-
-      navigate("/updates"); // Redirect after successful login
-    } catch (error) {
-      setErrors({ ...errors, api: "An error occurred. Please try again later." });
+      if (response.data && response.token) {
+        sessionStorage.setItem('user', JSON.stringify(response.data));
+        sessionStorage.setItem('token', response.token);
+        
+        // Force a small delay to ensure storage is complete
+        setTimeout(() => {
+          navigate('/dashboard', { replace: true });
+        }, 100);
+      } else {
+        throw new Error('Invalid response data');
+      }
+    } catch (error: any) {
+      setErrors({ ...errors, api: error.message || "Login failed. Please try again." });
+    } finally {
       setIsLoading(false);
     }
   };

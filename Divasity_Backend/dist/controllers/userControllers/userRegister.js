@@ -42,6 +42,9 @@ const userRegister = (request, response) => __awaiter(void 0, void 0, void 0, fu
         // Generate UUID and hash password
         const id = (0, uuid_1.v4)();
         const hashedPassword = yield (0, password_1.hashPassword)(password);
+        console.log('Creating user with data:', {
+            id, email, firstName, userName, address, lastName, telephone
+        });
         const newUser = yield models_1.User.create({
             id,
             email,
@@ -61,17 +64,21 @@ const userRegister = (request, response) => __awaiter(void 0, void 0, void 0, fu
             otp_code: emailOTP,
             otp_expiry: (0, expiryTime_1.expiryTime)(10),
         });
-        yield (0, emailOtpVerification_1.emailOTPVerification)(emailOTP, email);
+        // Temporarily disable email sending for testing
+        // await emailOTPVerification(emailOTP, email);
         return response.status(200).json({
             error: false,
-            message: "Registration successful, OTP sent to email",
+            message: "Registration successful, OTP created (email disabled for testing)",
+            otp: emailOTP, // Only for testing - remove in production
         });
     }
     catch (error) {
+        console.error('Registration error details:', error);
         return response.status(500).json({
             error: true,
             message: "Internal server error",
             errorMessage: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
         });
     }
 });

@@ -1,34 +1,25 @@
-# IOTA dApp Starter Template
+# Divasity Market Place
 
-This dApp was created using `@iota/create-dapp` that sets up a basic React
-Client dApp using the following tools:
+Divasity is a platform that helps small businesses launch, scale their businesses and access funding. It does not end there, it arms you with cryptocurrency tokens that can be converted into capital and a community of entrepreneurs like you who want to build unicorn businesses.
 
-- [React](https://react.dev/) as the UI framework
-- [TypeScript](https://www.typescriptlang.org/) for type checking
-- [Vite](https://vitejs.dev/) for build tooling
-- [Radix UI](https://www.radix-ui.com/) for pre-built UI components
-- [ESLint](https://eslint.org/)
-- [`@iota/dapp-kit`](https://docs.iota.org/ts-sdk/dapp-kit) for
-  connecting to wallets and loading data
-- [pnpm](https://pnpm.io/) for package management
 
-## Starting your dApp
+## Starting the application
 
 To install dependencies you can run
 
 ```bash
-pnpm install
+npm install
 ```
 
-To start your dApp in development mode run
+To start the application in development mode run
 
 ```bash
-pnpm dev
+npm dev
 ```
 
 ## Building
 
-To build your app for deployment you can run
+To build your application for deployment you can run
 
 ```bash
 pnpm build

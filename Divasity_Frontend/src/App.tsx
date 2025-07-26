@@ -1,5 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AppRoutes } from './routes/AppRoute';
+import { AuthGuard } from './components/Auth/AuthGuard';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Theme } from '@radix-ui/themes';
@@ -23,8 +24,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Theme>
         <Router>
-          <div className="App">
-            <AppRoutes />
+          <AuthGuard>
+            <div className="App">
+              <AppRoutes />
             <Toaster
               position="top-right"
               toastOptions={{
@@ -51,7 +53,8 @@ function App() {
                 },
               }}
             />
-          </div>
+            </div>
+          </AuthGuard>
         </Router>
       </Theme>
     </QueryClientProvider>

@@ -21,6 +21,7 @@ body {
   line-height: 1.6;
   color: #1f2937;
   background-color: #f9fafb;
+  min-height: 100vh;
 }
 
 /* Custom Scrollbar */
@@ -137,4 +138,49 @@ body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Page Layout Improvements */
+.page-container {
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+}
+
+.content-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Card Improvements */
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Spacing Utilities */
+.section-spacing {
+  margin-bottom: 3rem;
+}
+
+.content-spacing {
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .content-spacing {
+    padding: 2rem;
+  }
+  
+  .section-spacing {
+    margin-bottom: 4rem;
+  }
 }

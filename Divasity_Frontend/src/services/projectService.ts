@@ -80,7 +80,8 @@ class ProjectService {
       const response = await apiService.get<{ data: Project[] }>(`/projects/user/${userId}`);
       return response.data;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to fetch user projects');
+      console.warn('Failed to fetch user projects:', error.message);
+      return [];
     }
   }
 
@@ -187,7 +188,8 @@ class ProjectService {
       const response = await apiService.get<{ data: Investment[] }>(`/investments/user/${userId}`);
       return response.data;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to fetch investments');
+      console.warn('Failed to fetch user investments:', error.message);
+      return [];
     }
   }
 

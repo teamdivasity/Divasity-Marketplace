@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Loader, User, Mail, Phone, MapPin, Lock, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { images } from "../../constants";
+import { authService } from "../../services/authService";
+import { APP_CONFIG } from "../../config";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -83,39 +85,22 @@ export function Signup() {
 
     setIsLoading(true);
 
-    // Generate username from firstName and lastName in lowercase
-    const userName = `${form.firstName.trim().toLowerCase()}_${form.lastName.trim().toLowerCase()}`;
-
     try {
-      const response = await fetch("http://localhost:3000/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: form.email,
-          firstName: form.firstName,
-          userName: userName,
-          address: form.address,
-          lastName: form.lastName,
-          telephone: form.phone,
-          role: form.role,
-          password: form.password,
-        }),
+      const response = await authService.register({
+        email: form.email,
+        firstName: form.firstName,
+        lastName: form.lastName,
+        telephone: form.phone,
+        address: form.address,
+        password: form.password,
+        role: form.role,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setErrors({ api: errorData.message || "Signup failed. Please try again." });
-        setIsLoading(false);
-        return;
-      }
-
-      const data = await response.json();
-      console.log("Signup successful:", data);
+      console.log("Signup successful:", response);
       navigate(`/verify/${form.email}`); // Redirect to OTP route with email as param
-    } catch (error) {
-      setErrors({ api: "An error occurred. Please try again later." });
+    } catch (error: any) {
+      setErrors({ api: error.message || "Signup failed. Please try again." });
+    } finally {
       setIsLoading(false);
     }
   };
@@ -474,7 +459,7 @@ export function Signup() {
         </motion.div>
       </div>
       
-      <style jsx>{`
+      <style>{`
         .bg-pattern {
           background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }

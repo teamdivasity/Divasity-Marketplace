@@ -8,23 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyPassword = exports.hashPassword = void 0;
-const bcrypt = require("bcrypt");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const saltRounds = 10;
     try {
-        const hashedPassword = yield bcrypt.hash(password, saltRounds);
+        const hashedPassword = yield bcrypt_1.default.hash(password, saltRounds);
         return hashedPassword;
     }
     catch (error) {
-        return error;
+        throw error;
     }
 });
 exports.hashPassword = hashPassword;
 const verifyPassword = (password, savedPassword) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const match = yield bcrypt.compare(password, savedPassword);
+        const match = yield bcrypt_1.default.compare(password, savedPassword);
         if (match) {
             return true;
         }

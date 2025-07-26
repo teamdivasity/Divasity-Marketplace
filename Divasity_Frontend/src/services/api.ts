@@ -1,13 +1,14 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useAuthStore } from '../store/authStore';
 import toast from 'react-hot-toast';
+import { API_URL } from '../config';
 
 class ApiService {
   private api: AxiosInstance;
   private baseURL: string;
 
   constructor() {
-    this.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+    this.baseURL = API_URL;
     
     this.api = axios.create({
       baseURL: this.baseURL,
@@ -24,7 +25,7 @@ class ApiService {
     // Request interceptor
     this.api.interceptors.request.use(
       (config) => {
-        const token = useAuthStore.getState().token;
+        const token = sessionStorage.getItem('token') || localStorage.getItem('token');
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -42,7 +43,10 @@ class ApiService {
       },
       (error) => {
         if (error.response?.status === 401) {
-          useAuthStore.getState().logout();
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('user');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
           toast.error('Session expired. Please login again.');
           window.location.href = '/signin';
         } else if (error.response?.status >= 500) {

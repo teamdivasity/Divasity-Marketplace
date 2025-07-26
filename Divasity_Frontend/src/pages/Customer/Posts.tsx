@@ -1,7 +1,6 @@
 import { TabHeader } from '../../components/Header/TabHeader';
 import { 
   Bell, 
-  Plus, 
   Search, 
   ThumbsUp, 
   MessageCircle, 
@@ -14,7 +13,6 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 interface Post {
   id: string;
@@ -73,7 +71,7 @@ export function Posts() {
         avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
         role: 'Mentor'
       },
-      content: 'Hosting a webinar next week on "How to Pitch Your Project to Investors." If you\'re planning to launch a project on Divasity, this might be helpful! Drop a comment if you\'re interested and I\'ll share the registration link.',
+      content: 'Hosting a webinar next week on \"How to Pitch Your Project to Investors.\" If you\'re planning to launch a project on Divasity, this might be helpful! Drop a comment if you\'re interested and I\'ll share the registration link.',
       likes: 32,
       comments: 18,
       shares: 15,

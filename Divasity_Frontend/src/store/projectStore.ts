@@ -81,7 +81,7 @@ interface ProjectState {
   clearFilters: () => void;
 }
 
-export const useProjectStore = create<ProjectState>((set, get) => ({
+export const useProjectStore = create<ProjectState>((set) => ({
   projects: [],
   userProjects: [],
   userInvestments: [],

@@ -1,32 +1,35 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { authService } from '../../services/authService';
+import { APP_CONFIG } from '../../config';
 
 export default function Otp() {
   const { email } = useParams();
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isResending, setIsResending] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/users/verifyotp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp }),
-      });
-      const data = await response.json();
+      if (!email) {
+        setError('Email is required');
+        return;
+      }
+      
+      const response = await authService.verifyOTP({ email, otp });
 
-      if (data.error) {
-        setError(data.message);
+      if (response.error) {
+        setError(response.message);
         setMessage('');
       } else {
-        setMessage(data.message);
-        navigate('/signin')
+        setMessage(response.message);
+        navigate(APP_CONFIG.defaultRedirectAfterLogout); // Navigate to login page
         setError('');
       }
-    } catch (err) {
-      setError('Failed to verify OTP');
+    } catch (err: any) {
+      setError(err.message || 'Failed to verify OTP');
       setMessage('');
     }
   };
@@ -89,8 +92,30 @@ export default function Otp() {
           {/* Resend */}
           <div className="mt-8 text-center">
             <p className="text-gray-600 text-sm mb-2">Didn't receive the code?</p>
-            <button className="text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors">
-              Resend Code
+            <button 
+              onClick={async () => {
+                if (isResending || !email) return;
+                setIsResending(true);
+                try {
+                  const response = await authService.resendOTP(email);
+                  if (response.error) {
+                    setError(response.message);
+                    setMessage('');
+                  } else {
+                    setMessage('Verification code resent to your email');
+                    setError('');
+                  }
+                } catch (err: any) {
+                  setError(err.message || 'Failed to resend verification code');
+                  setMessage('');
+                } finally {
+                  setIsResending(false);
+                }
+              }}
+              disabled={isResending}
+              className="text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors disabled:opacity-50"
+            >
+              {isResending ? 'Sending...' : 'Resend Code'}
             </button>
           </div>
         </div>
