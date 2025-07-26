@@ -1,7 +1,7 @@
 {
-  "name": "faucet_assets",
+  "name": "divasity_marketplace",
   "version": "0.1.0",
-  "description": "Internet Computer starter application",
+  "description": "A web3 integration of Divasity Market place",
   "keywords": [
     "Internet Computer",
     "Motoko",
